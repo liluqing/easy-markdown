@@ -1,10 +1,14 @@
 {
   "schema_version": 1,
-  "mode": "bootstrap-limited",
+  "mode": "active",
   "protected_branch": "main",
-  "canonical_repository": null,
-  "approved_fetch_urls": [],
-  "approved_push_urls": [],
+  "canonical_repository": "liluqing/easy-markdown",
+  "approved_fetch_urls": [
+    "https://github.com/liluqing/easy-markdown.git"
+  ],
+  "approved_push_urls": [
+    "https://github.com/liluqing/easy-markdown.git"
+  ],
   "approved_url_rewrites": [],
   "allowed_remote_url_schemes": [
     "https",
@@ -58,7 +62,9 @@
   },
   "max_auto_stage_file_bytes": 5242880,
   "allowed_binary_globs": [],
-  "required_checks": [],
+  "required_checks": [
+    "validate"
+  ],
   "auto_merge_change_classes": [
     "trivial",
     "standard"
