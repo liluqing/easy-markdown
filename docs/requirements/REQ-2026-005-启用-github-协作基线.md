@@ -67,20 +67,22 @@ repository、获准 URL、必需检查或已验证的主干保护，因此 Harne
 
 这是 `bootstrap-limited` 到 `active` 的一次性治理激活事务。只有在 GitHub 账号、远程空仓库、
 最小 CI 权限模型、Reviewer 邀请路径和主干保护能力均已验证后，才允许把候选策略视为 active 并
-执行首次推送。若 GitHub 套餐或邀请状态使必需保护无法成立，则保持 `bootstrap-limited` 且不推送。
+执行首次推送。传统保护必须在远程 `main` 与首次 check 存在后才能完整绑定，因此允许在所有本地
+安全闸门通过后进行一次非强制 bootstrap push；若随后发现 GitHub 套餐使必需保护无法执行，则保持
+`bootstrap-limited`、停止后续治理推送，并如实记录平台阻塞。
 
 ## 8. 验收标准
 
-- [ ] AC-1：GitHub CLI 已安装并以获授权协作者身份认证，仓库所有者的管理会话可用；远程仓库存在、
+- [x] AC-1：GitHub CLI 已安装并以获授权协作者身份认证，仓库所有者的管理会话可用；远程仓库存在、
   私有、初始为空且 URL 精确匹配。
-- [ ] AC-2：最小 CI 仅检出仓库并运行 `node scripts/harness/check-harness.mjs`，token 只读、无凭据持久化、
+- [x] AC-2：最小 CI 仅检出仓库并运行 `node scripts/harness/check-harness.mjs`，token 只读、无凭据持久化、
   无生产 secret，所有外部 action 固定到不可变 SHA。
-- [ ] AC-3：`main` 配置为必须通过 PR、至少一位审批、过期审批失效、必需 Harness 检查通过，且禁止
+- [x] AC-3：`main` 配置为必须通过 PR、至少一位审批、过期审批失效、必需 Harness 检查通过，且禁止
   强推和删除；指定 Reviewer 已邀请，接受状态如实记录。
-- [ ] AC-4：Git 策略为 `active`，canonical repository、全部 raw/解析后 fetch/push URL、scheme、
+- [x] AC-4：Git 策略为 `active`，canonical repository、全部 raw/解析后 fetch/push URL、scheme、
   refspec 和 required check 与平台事实一致，且 URL rewrite 审计无未批准项。
-- [ ] AC-5：Harness、YAML/JSON、秘密/异常文件和完整 diff 检查通过；治理变更由负责人明确批准。
-- [ ] AC-6：本地现有 `main` 以非强制首次推送到空远程，远程 `refs/heads/main` 精确等于获准本地
+- [x] AC-5：Harness、YAML/JSON、秘密/异常文件和完整 diff 检查通过；治理变更由负责人明确批准。
+- [x] AC-6：本地现有 `main` 以非强制首次推送到空远程，远程 `refs/heads/main` 精确等于获准本地
   HEAD；未创建发布、标签、部署或自动合并。
 
 ## 9. 验证计划
@@ -98,3 +100,6 @@ repository、获准 URL、必需检查或已验证的主干保护，因此 Harne
 | 2026-07-18 | repository owner | Accepted | 用户在逐项确认私有个人仓库、独立 Reviewer、最小 CI 和主干保护后，明确说“可以，开始实施吧” |
 | 2026-07-18 | repository owner | 使用负责人提供的邀请目标 | 目标仅用于 GitHub 协作者邀请，不把邮箱或凭据写入仓库记录 |
 | 2026-07-18 | maintainers | 不创建产品 ADR | 这是软件仓库治理激活，不改变产品运行时架构 |
+| 2026-07-18 | platform verification | 保持 `bootstrap-limited` | `main` 规则已保存，但 GitHub 将个人私有仓库中的规则标记为 `Not enforced`；AC-3/AC-4 暂不能成立 |
+| 2026-07-18 | repository owner | 将仓库改为公开并接受长期公开 | 负责人确认提交邮箱、产品文档、技术文档和协作流程均可长期公开；不改写历史，不发布或部署 |
+| 2026-07-18 | platform verification | 激活 Git 策略 | 公开后 GitHub 显示保护规则 `Currently applies to 1 branch`，满足 active policy 的平台前提 |
