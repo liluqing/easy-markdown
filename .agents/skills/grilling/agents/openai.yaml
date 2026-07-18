@@ -1,0 +1,4 @@
+interface:
+  display_name: "Grilling"
+  short_description: "Resolve high-impact decisions one question at a time"
+  default_prompt: "Use $grilling to stress-test this decision one question at a time before acting."

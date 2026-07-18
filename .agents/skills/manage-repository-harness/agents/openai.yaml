@@ -1,0 +1,4 @@
+interface:
+  display_name: "Easy Markdown Repository Harness"
+  short_description: "Turn natural requests into safe, traceable repository work"
+  default_prompt: "Use $manage-repository-harness to interpret this natural-language request, recover repository context, and safely advance the work."

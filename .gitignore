@@ -1,0 +1,36 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Node and frontend
+node_modules/
+dist/
+.vite/
+coverage/
+
+# Rust and Tauri
+target/
+src-tauri/target/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Logs, caches, and temporary files
+*.log
+*.tmp
+*.swp
+*.bak
+.cache/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

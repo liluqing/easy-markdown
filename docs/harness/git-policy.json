@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "mode": "bootstrap-limited",
+  "protected_branch": "main",
+  "canonical_repository": null,
+  "approved_fetch_urls": [],
+  "approved_push_urls": [],
+  "approved_url_rewrites": [],
+  "allowed_remote_url_schemes": [
+    "https",
+    "ssh"
+  ],
+  "allowed_agent_push_ref_prefixes": [
+    "refs/heads/codex/"
+  ],
+  "governance_paths": [
+    "AGENTS.md",
+    "**/AGENTS.md",
+    "CONTRIBUTING.md",
+    ".agents/skills/**",
+    "docs/harness/**",
+    "docs/requirements/README.md",
+    "docs/work/README.md",
+    "docs/templates/**",
+    "scripts/harness/**",
+    "CODEOWNERS",
+    ".github/CODEOWNERS",
+    ".gitlab/CODEOWNERS",
+    "docs/CODEOWNERS"
+  ],
+  "remote_execution_paths": [
+    ".github/workflows/**",
+    ".github/actions/**",
+    ".gitlab-ci.yml",
+    ".gitlab/ci/**",
+    "azure-pipelines.yml",
+    ".azure-pipelines/**",
+    "Jenkinsfile",
+    "jenkins/**",
+    ".circleci/**",
+    "scripts/**",
+    "package.json",
+    "package-lock.json",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "Cargo.toml",
+    "Cargo.lock",
+    "Makefile",
+    "Taskfile.yml",
+    "justfile"
+  ],
+  "untrusted_branch_ci": {
+    "production_secrets": "forbidden",
+    "token_permissions": "read-only",
+    "persist_credentials": false,
+    "external_includes": "immutable-pinned",
+    "privileged_branch_execution": "forbidden"
+  },
+  "max_auto_stage_file_bytes": 5242880,
+  "allowed_binary_globs": [],
+  "required_checks": [],
+  "auto_merge_change_classes": [
+    "trivial",
+    "standard"
+  ],
+  "merge_method": "squash",
+  "require_non_author_approval": true,
+  "dismiss_stale_approvals": true,
+  "require_expected_head": true
+}
