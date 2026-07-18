@@ -100,7 +100,7 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 
 ## 9. 交接
 
-- 当前状态：`in-progress`
+- 当前状态：`in-progress`（本次启动切片已完成，等待后续业务 Spike）
 - 已完成：同步合并后的 `main`；创建分支和 REQ/WORK；安装 Rust/MSVC 并确认 WebView2；生成并收敛 Tauri 2 + React/TypeScript/Vite 骨架；前端构建、Cargo metadata、Tauri info 通过。
 - 未完成：实际业务开发和完整 Spike；Rust 编译/打包被机器应用控制策略阻塞，bundle 图标和安装包留待后续切片。
 - 下一具体动作：本次用户范围到此暂停；后续若继续，先解决应用控制策略，再另建/恢复业务 Spike 切片。
@@ -110,8 +110,8 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 残余风险：未证明 Rust 编译器能执行依赖 build-script；bundle 关闭且无图标资产，不可作为安装包交付。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；原有 `.gitignore` 已恢复未改动。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；无用户 modified/staged/untracked 文件。
-- Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；HEAD/base `ef912f5`；
-  REQ/WORK 与骨架文件为未提交变更，owned paths 初始为 absent；尚未 commit/push。
-- PR 状态：`not-run`；需先完成环境闸门和首个可评审切片，随后按策略创建 Draft PR。
+- Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
+  当前 HEAD `c0c2851`；工作区 clean；REQ/WORK 与骨架 owned paths 初始为 absent；本地检查点已提交。
+- PR 状态：`not-run`；未推送/未创建 Draft PR。改动命中 `package.json`、`Cargo.toml` 等 `remote_execution_paths`，按策略等待独立安全/维护者批准后再推送。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。
