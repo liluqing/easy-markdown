@@ -111,7 +111,7 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；原有 `.gitignore` 已恢复未改动。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；无用户 modified/staged/untracked 文件。
 - Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
-  当前 HEAD `c0c2851`；工作区 clean；REQ/WORK 与骨架 owned paths 初始为 absent；本地检查点已提交。
+  骨架检查点为 `c0c2851`，随后追加交接记录提交；工作区 clean；REQ/WORK 与骨架 owned paths 初始为 absent。
 - PR 状态：`not-run`；未推送/未创建 Draft PR。改动命中 `package.json`、`Cargo.toml` 等 `remote_execution_paths`，按策略等待独立安全/维护者批准后再推送。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。
