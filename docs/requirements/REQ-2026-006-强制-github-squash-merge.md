@@ -2,7 +2,7 @@
 id: REQ-2026-006
 title: "强制 GitHub Squash Merge"
 type: maintenance
-status: accepted
+status: validated
 priority: P1
 owner: "repository-maintainers"
 created: 2026-07-18
@@ -66,7 +66,7 @@ GitHub 设置是执行层，不在文档中复制可变 UI 步骤。
 - [x] AC-2：仓库仍为 public、默认分支仍为 `main`，现有 `main` 保护和 required check `validate`
   保持生效。
 - [x] AC-3：`main` 历史未被改写；本变更不创建 release、deployment、tag 或自动 merge。
-- [ ] AC-4：Harness、完整 diff、秘密/异常文件和远程 URL 闸门通过；治理变更进入独立评审 PR。
+- [x] AC-4：Harness、完整 diff、秘密/异常文件和远程 URL 闸门通过；治理变更进入独立评审 PR。
 
 每条标准必须能独立判断通过或失败，并在 WORK 中关联证据。
 

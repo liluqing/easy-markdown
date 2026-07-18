@@ -1,7 +1,7 @@
 ---
 id: WORK-2026-006
 title: "收紧 GitHub 合并方式"
-status: in-progress
+status: done
 requirement: REQ-2026-006
 owner: "Codex"
 created: 2026-07-18
@@ -52,7 +52,7 @@ updated: 2026-07-18
 
 - [x] 复核本地/远程基线、现有策略与 GitHub 合并方式。
 - [x] 修改 GitHub 设置为只允许 Squash Merge，并复核无旁路变化。
-- [ ] 更新证据，运行 Harness/diff/秘密/URL 闸门，提交、推送并建立 PR。
+- [x] 更新证据，运行 Harness/diff/秘密/URL 闸门，提交、推送并建立 PR。
 
 ## 5. 验收映射
 
@@ -61,7 +61,7 @@ updated: 2026-07-18
 | AC-1 | GitHub repository API 三个 merge 布尔值 | passed |
 | AC-2 | API/页面核对 visibility、default branch、protected、`validate` | passed |
 | AC-3 | main SHA/历史比较，release/tag/deployment 审计 | passed |
-| AC-4 | Harness、diff、秘密/异常文件、URL 审计与 PR | pending |
+| AC-4 | Harness、diff、秘密/异常文件、URL 审计与 PR | passed |
 
 ## 6. 决定、假设与范围变化
 
@@ -88,19 +88,23 @@ updated: 2026-07-18
 | GitHub 仓库旁路复核 | passed | public；default `main`；auto-merge=false；自动删分支=false；main SHA `a164ee2` | 可见性、历史和其他合并设置未变 |
 | `main` 保护复核 | passed | PR/status required；`validate` required；no bypass；force push/delete disabled | 所有者保护规则页面 |
 | 最新主干 CI | passed | Harness push run success，head `a164ee2` | 修改设置未触发代码变更 |
+| 本地交付闸门 | passed | Harness 6 REQ/1 active WORK/5 archived WORK/5 ADR/45 Markdown；diff/秘密/异常文件通过 | 仅 REQ/WORK 两个 absent 路径 |
+| 治理 commit/push | passed | `22e6bcf9f167d9a4b72cf52627758c3d7ceac39b`；非强制推送同名 WORK 分支 | 可信 HTTPS origin，无 URL rewrite |
+| Draft PR 与 CI | passed | PR #2；exact head `22e6bcf`；run `29645820065` / `validate` success | 已请求 `liluqing` 独立评审 |
 
 ## 9. 交接
 
-- 当前状态：`in-progress`
+- 当前状态：`done`，待归档提交后将 PR 转为 Ready。
 - 已完成：接受 REQ、建立 WORK/分支、复核基线；平台已只允许 Squash Merge；主干保护与历史无变化。
-- 未完成：本地 Harness/diff/秘密/URL 闸门、提交、push、PR 与远程 CI。
-- 下一具体动作：验证并提交 REQ/WORK 证据，推送工作分支并创建 Draft PR。
+- 未完成：归档提交、最终 CI 和独立审批；人工合并不属于本 WORK DoD。
+- 下一具体动作：归档 WORK，推送终态记录，等待最终 `validate`，将 PR 转为 Ready。
 - 修改路径：REQ-2026-006、WORK-2026-006。
 - 已运行验证：Git 状态/策略/远程基线、GitHub repository/branch/actions API、所有者设置和保护页面。
-- 未运行验证及原因：本地 Harness/diff/秘密/URL 和 PR CI 尚待执行。
+- 未运行验证及原因：非作者审批等待 `liluqing`；重大治理变更不自动 merge。
 - 残余风险：现有 Merge Commit 按约定保留；本治理记录仍需独立评审，不自动 merge。
 - 工作区保护：任务开始时 clean，无用户改动；只暂存上表两个 absent 路径。
-- Git 状态：分支 `codex/WORK-2026-006-enforce-squash-merge`；base/HEAD `a164ee2`；
-  REQ/WORK 为本任务新增未跟踪文件；last commit/push not-run。
-- PR 状态：not-run；重大治理变更不自动 merge。
-- 终态说明：完成平台复核与交付闸门后设为 `done` 并归档。
+- Git 状态：分支 `codex/WORK-2026-006-enforce-squash-merge` 跟踪同名 origin；base main
+  `a164ee2`；HEAD/last push `22e6bcf9f167d9a4b72cf52627758c3d7ceac39b`；终态记录未提交。
+- PR 状态：[#2](https://github.com/liluqing/easy-markdown/pull/2) Draft；exact head `22e6bcf`；
+  `validate` passed；已请求 `liluqing` 评审；自动 merge 禁止。
+- 终态说明：平台目标和全部验收已满足，WORK 可归档；最终合并由负责人评审决定。
