@@ -2,7 +2,7 @@
 id: REQ-2026-005
 title: "启用 GitHub 协作基线"
 type: enabler
-status: accepted
+status: validated
 priority: P0
 owner: "repository-maintainers"
 created: 2026-07-18

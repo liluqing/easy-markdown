@@ -1,7 +1,7 @@
 ---
 id: WORK-2026-005
 title: "配置 GitHub 远程协作与首次推送"
-status: in-progress
+status: done
 requirement: REQ-2026-005
 owner: "Codex"
 created: 2026-07-18
@@ -70,7 +70,7 @@ GitHub 仓库建立最小权限 CI、Reviewer 路径、`main` 保护和可信远
 - [x] 更新 active Git 策略，运行 Harness、格式、安全、diff 和 URL 闸门。
 - [x] 完成聚焦提交、首次 push、远程 SHA/CI 复核。
 - [x] 通过负责人授权改为公开仓库，使保护规则实际执行。
-- [ ] 完成治理分支、PR、远程 CI 与最终交接。
+- [x] 完成治理分支、PR、远程 CI 与最终交接。
 
 ## 5. 验收映射
 
@@ -131,24 +131,30 @@ GitHub 仓库建立最小权限 CI、Reviewer 路径、`main` 保护和可信远
 | 仓库可见性变更 | passed | GitHub settings 显示 `This repository is currently public`；CLI 返回 `visibility: PUBLIC` | 未改名、迁移、发布或部署 |
 | `main` 保护执行复核 | passed | GitHub 显示规则 `80428080` `Currently applies to 1 branch` | CLI 协作者令牌无读取保护 API 的管理权限，返回 404；以所有者页面为准 |
 | active policy candidate | passed | canonical `liluqing/easy-markdown`；fetch/push HTTPS URL；required check `validate`；无 URL rewrite | 待治理分支 CI/评审 |
+| 治理检查点 commit/push | passed | `b5f7d4b412c1462169cb17c55c3a282f6847cf1c`；显式非强制推送到 `codex/WORK-2026-005-activate-github-governance` | 仅 3 个任务治理文件 |
+| Draft PR | passed | PR #1，head `b5f7d4b412c1462169cb17c55c3a282f6847cf1c`，base `main` | 已请求 `liluqing` 评审 |
+| PR Harness CI | passed | run `29645364699`；job/check `validate` success | 对应 PR #1 精确 head |
 
 ## 9. 交接
 
-- 当前状态：`in-progress`
+- 当前状态：`done`，待归档提交推送后把 PR 转为 Ready。
 - 已完成：需求接受和执行范围建档；安装并认证 GitHub CLI 2.96.0；确认独立 Reviewer 具备 Write
   权限；固定官方 action SHA；创建并通过最小 CI；完成首次非强制推送和 SHA 复核；保存完整
   `main` 保护规则。
 - 已完成：保护规则实际执行；仓库改为公开；active policy 候选；治理分支已从精确远程 main 建立。
-- 未完成：治理检查点提交、分支 push、PR、远程 CI、独立审批和归档。
-- 下一具体动作：提交并推送治理候选，创建 Draft PR，等待 `validate` 与非作者评审。
+- 未完成：独立审批与人工合并；它们是 PR 门禁，不阻止本 WORK 达到 DoD。
+- 下一具体动作：归档 WORK、推送最终交接提交、等待最终 `validate`；随后 PR 转为 Ready，交由
+  `liluqing` 独立评审和决定是否合并。
 - 修改路径：`docs/harness/git-policy.json`、REQ-2026-005、WORK-2026-005；此前已推送
   `.github/workflows/harness.yml`。
 - 已运行验证：初始 Git/远程/工具审计、Harness、YAML 解析、CI 安全、秘密形态、首次远程 CI、
   本地/远程 SHA、协作者权限和保护规则页面复核。
-- 未运行验证及原因：治理分支远程 CI、PR 检查与非作者审批需在首次分支 push 后运行。
+- 未运行验证及原因：非作者审批尚在等待；重大治理变更按规则不自动 merge。
 - 残余风险：仓库内容已公开；治理变更命中 `docs/harness/**`，必须经过独立评审，不自动 merge。
 - 工作区保护：任务开始时无用户改动；只暂存第 2 节明确列出的 clean/absent 路径。
-- Git 状态：`codex/WORK-2026-005-activate-github-governance`；base/HEAD/remote main
-  `00876fe9f271b2dc2854fc8c8e7ba5144bfafb26`；3 个任务路径尚未提交。
-- PR 状态：未创建；首次 main CI `validate` 已通过；保护规则实际应用于 `main`。
-- 终态说明：只有全部验收和最终 Harness 通过后才能设为 `done` 并归档；不执行自动 merge。
+- Git 状态：`codex/WORK-2026-005-activate-github-governance` 跟踪同名 origin；HEAD/last push
+  `b5f7d4b412c1462169cb17c55c3a282f6847cf1c`；base/remote main
+  `00876fe9f271b2dc2854fc8c8e7ba5144bfafb26`；当前只有终态记录尚未提交。
+- PR 状态：[#1](https://github.com/liluqing/easy-markdown/pull/1) Draft；exact head `b5f7d4b`；
+  `validate` passed；已请求 `liluqing` 评审；尚无非作者批准。
+- 终态说明：本 WORK 满足 DoD 并归档；治理变更不自动 merge，最终由负责人完成 GitHub 评审。
