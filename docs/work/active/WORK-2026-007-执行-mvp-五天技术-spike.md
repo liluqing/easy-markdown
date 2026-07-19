@@ -126,7 +126,7 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；本次仅扩充 `.gitignore` 的可重建产物规则。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；随后保留用户生成的 `app-icon.png` 与 `src-tauri/icons/**`，本次不自动暂存二进制图标。
 - Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
-  骨架检查点为 `c0c2851`，随后追加交接记录提交；当前工作区包含本次 WORK 文档修改、未跟踪的
+  当前 HEAD 为 `ecdb8c7`，已包含本次 `.gitignore` 与 WORK 记录提交；工作区仅保留未跟踪的
   `app-icon.png` 和 `src-tauri/icons/**`；REQ/WORK 与骨架 owned paths 初始为 absent。
 - 图标提交状态：`not-run`；仓库策略的 `allowed_binary_globs` 为空，本次提交不自动暂存 PNG/ICO/ICNS 二进制工件。
 - PR 状态：`not-run`；未推送/未创建 Draft PR。改动命中 `package.json`、`Cargo.toml` 等 `remote_execution_paths`，按策略等待独立安全/维护者批准后再推送。
