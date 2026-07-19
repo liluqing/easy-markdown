@@ -191,6 +191,7 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
 | `pnpm build` | passed | Vite 7.3.6，57 modules，JS 809.31 KiB | Day 2 生产构建通过；保留单块超过 500 KiB 的优化提示 |
 | `node --test scripts/harness/lib.test.mjs` | passed | 2/2 tests | Day 2 修改后 Harness 回归测试通过 |
 | `node scripts/harness/check-harness.mjs` | passed | 7 REQ、1 active WORK、6 archived WORK、5 ADR、47 Markdown files | Day 2 文档与交接记录完成后通过 |
+| Git/GitHub 交接 | passed | implementation HEAD `73a3541` 已推送；Draft PR [#3](https://github.com/liluqing/easy-markdown/pull/3)；远端 `validate` success | PR 保持 Draft，`reviewDecision=REVIEW_REQUIRED`；未转 Ready/未 merge |
 
 ## 9. 交接
 
@@ -203,9 +204,10 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
 - 未完成：NSIS 卸载因 Computer Use 产品策略未运行；Clippy 因 App Control 4551 未通过；
   递归 Watch、自动保存、Merge View、Git、搜索、预览、E2E、性能和最终 ADR/Go 决策仍属
   后续切片。
-- 下一具体动作：项目侧实现递归 Watch/debounce，把外部修改事件接入当前版本令牌模型，
-  再加入自动保存和完整 Merge View；宿主外的人类会话可另行卸载隔离 `LocalCache` 中的
-  测试应用。因治理/远端执行路径需要独立批准，push/PR 保持 `not-run`。
+- 下一具体动作：由独立技术/安全评审者评审 Draft PR #3，并在 App Control 允许后重跑
+  Clippy；项目侧下一实现切片是递归 Watch/debounce，把外部修改事件接入当前版本令牌模型，
+  再加入自动保存和完整 Merge View。宿主外的人类会话可另行卸载隔离 `LocalCache` 中的
+  测试应用。
 - 修改路径：REQ/WORK、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`rust-toolchain.toml`、`index.html`、`vite.config.ts`、`tsconfig*.json`、`src/**`、`src-tauri/**`、`public/**`、`app-icon.png`。
 - 已运行验证：环境版本盘点、pnpm install/approve-builds、前端 build/typecheck、Cargo
   metadata、Tauri info/icon、图标完整性、Node Harness tests、Harness、Rust fmt/test、
@@ -217,13 +219,19 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
   文件外部变化只在手动保存时发现；前端单块约 809 KiB。这些均为当前切片的已知限制。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；本次仅扩充 `.gitignore` 的可重建产物规则。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；用户生成的 `app-icon.png` 与 `src-tauri/icons/**` 经策略确认后纳入本次资产提交。
-- Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
-  当前 HEAD 为 `135edba`；Day 1 与 Harness 变更尚未提交，所有修改路径均已在 owned paths
-  中按 clean/absent 起始状态记录。
+- Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，上游为同名 `origin`
+  分支；base/main tip 均为 `ef912f5`。实现检查点 `73a3541` 已提交并推送，所有修改路径
+  均已在 owned paths 中按 clean/absent 起始状态记录。
 - 图标提交状态：`included`；`app-icon.png` 与 `src-tauri/icons/**` 已按白名单提交，单文件均不超过 10 MiB。
-- 检查点状态：`authorized`；Clippy 的环境阻断仍是提交闸门失败，用户在已知该失败后明确
-  批准建立 WIP 检查点。提交与 PR 必须继续披露该失败，不得宣称本 WORK 已完成。
-- PR 状态：`planned-draft`；分支累计改动命中治理与 `remote_execution_paths`，用户作为
-  非 Agent 的仓库负责人已独立批准本次 Draft PR 交接；不授权转 Ready 或 merge。
+- 检查点状态：`passed-with-explicit-wip-exception`；实现提交 `73a3541` 已创建。Clippy 的
+  环境阻断仍是失败项，用户在已知该失败后明确批准 WIP 检查点；提交和 PR 均已披露，不
+  宣称本 WORK 已完成。
+- Push 状态：`passed`；端点预检确认 raw/解析后 fetch/push URL 均为策略批准的
+  `https://github.com/liluqing/easy-markdown.git`，无 URL rewrite 或多值端点；首次显式
+  refspec push 成功并建立 upstream。
+- PR 状态：`draft`；[GitHub PR #3](https://github.com/liluqing/easy-markdown/pull/3)
+  针对 `main`，首次观察 exact head `73a3541`、`mergeable=true`、远端 `validate=success`、
+  `reviewDecision=REVIEW_REQUIRED`。分支累计改动命中治理与 `remote_execution_paths`，
+  用户作为非 Agent 的仓库负责人已独立批准本次 Draft 交接；不授权转 Ready 或 merge。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。
