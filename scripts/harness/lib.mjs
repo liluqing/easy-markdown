@@ -125,7 +125,22 @@ export function filesIn(directory, predicate = () => true) {
 }
 
 export function walkFiles(directory, options = {}) {
-  const skipDirectories = new Set(options.skipDirectories ?? [".git", "node_modules"]);
+  const skipDirectories = new Set(
+    options.skipDirectories ?? [
+      ".git",
+      "node_modules",
+      ".pnpm-store",
+      "dist",
+      ".vite",
+      ".turbo",
+      ".parcel-cache",
+      "coverage",
+      "test-results",
+      "playwright-report",
+      "target",
+      ".cache",
+    ],
+  );
   const results = [];
 
   if (!fs.existsSync(directory)) {

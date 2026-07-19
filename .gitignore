@@ -5,13 +5,24 @@
 
 # Node and frontend
 node_modules/
+.pnpm-store/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 dist/
 .vite/
+.turbo/
+.parcel-cache/
 coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo
 
 # Rust and Tauri
 target/
 src-tauri/target/
+*.pdb
 
 # Python
 .venv/
@@ -27,6 +38,7 @@ __pycache__/
 *.tmp
 *.swp
 *.bak
+*.pid
 .cache/
 
 # Editors and operating systems
