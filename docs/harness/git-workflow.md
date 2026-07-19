@@ -121,6 +121,14 @@ hunks。变更依赖用户 hunks、无法可靠分离或需要纳入整文件时
 暂存必须显式列出已证明归属的路径或纯 Agent patch。不得用 `git add -A`、`git add .` 或
 通配式批量暂存来绕过归属判断。已有暂存内容不属于当前任务时停止，不修改用户的暂存区。
 
+### 源图片资产准入
+
+图片是程序源资产时可以进入仓库，但必须命中 `git-policy.json` 的 `allowed_binary_globs`，且单文件不超过
+`max_auto_stage_file_bytes`（当前为 10 MiB）。当前允许的目录和格式为：根目录 `app-icon.png`、
+`src-tauri/icons/**` 下的 PNG/ICO/ICNS，以及 `src/assets/**` 和 `public/assets/**` 下的
+PNG/JPG/JPEG/WebP/GIF/SVG。构建输出、安装包、缓存和临时文件仍由 `.gitignore` 排除；不在这些目录或
+格式白名单内的二进制必须先取得明确纳入策略的决定。
+
 ### 提交信息
 
 标题采用简洁的 Conventional Commit 风格：

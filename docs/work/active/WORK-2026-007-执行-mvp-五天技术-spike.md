@@ -46,6 +46,7 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 保留可继续开发的目录结构与启动/构建脚本，不加入业务 IPC 或领域模块。
 - 保留一枚 512×512 PNG 应用图标源文件，并通过 Tauri CLI 生成 Windows、macOS、Linux 所需的完整平台图标集；不开启 bundle 或验证安装包。
 - 优化仓库忽略规则，覆盖 pnpm 本地缓存、调试符号、TypeScript 增量元数据和测试报告等可重建产物；不忽略应用图标源文件或平台图标资产。
+- 将程序图片源资产纳入受控 Git 二进制白名单：根目录 `app-icon.png`、`src-tauri/icons/**` 的 PNG/ICO/ICNS，以及 `src/assets/**`、`public/assets/**` 的常用图片格式；单文件上限为 10 MiB。
 
 ### 非目标
 
@@ -82,7 +83,8 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 | 2026-07-18 | 范围收窄 | 用户明确本次只准备开发环境和项目骨架，不做实际开发 | 当前 WORK 只交付启动切片 |
 | 2026-07-19 | 范围追加 | 用户明确要求“为当前应用生成一个图标，要求 512×512” | 追加单个图标源文件；不扩大到 bundle/安装包 |
 | 2026-07-19 | 范围追加 | 用户提供并推荐 `pnpm tauri icon app-icon.png` 方法 | 批量生成平台派生图标；影响限定为 `app-icon.png` 与 `src-tauri/icons/**` |
-| 2026-07-19 | Git 提交 | 用户要求提交当前代码并优化 Git 忽略配置 | 仅提交代码/文档与 `.gitignore`；按当前策略暂不自动纳入二进制图标 |
+| 2026-07-19 | Git 提交 | 用户要求提交当前代码并优化 Git 忽略配置 | 已提交代码/文档与 `.gitignore`；图片资产准入策略另行确认 |
+| 2026-07-19 | Git 策略 | 用户确认程序图片属于代码骨架资产，并将单文件上限从 5 MiB 调整为 10 MiB | 更新 `git-policy.json` 的图片白名单与大小阈值，并纳入当前图标集 |
 
 ## 7. 风险与阻塞
 
@@ -100,8 +102,8 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 | `git status --short --branch` / `git rev-parse HEAD` | passed | clean `main`; base `ef912f5` | 已完成并创建 Spike 分支 |
 | Git remote URL/策略预检 | passed | HTTPS origin 与 active policy 完全匹配 | 无 rewrite/multi-url |
 | Node/pnpm/Git/ripgrep 版本盘点 | passed | Node 24.17.0; pnpm 11.9.0; Git 2.54.0; rg 15.1.0 | 已具备 |
-| Rust/Cargo/MSVC 工具盘点 | blocked | `cargo`/`rustc` 不在 PATH；MSVC 未发现 | 安装动作未执行 |
-| `node scripts/harness/check-harness.mjs` | not-run | 记录创建后再运行 | 当前切片未完成 |
+| Rust/Cargo/MSVC 工具盘点 | passed | Rust 1.97.1、Cargo 1.97.1、VS Build Tools 2026 | 工具链已具备 |
+| `node scripts/harness/check-harness.mjs` | passed | 7 REQ、1 active WORK、6 archived WORK、5 ADR、47 Markdown files | 临时移出构建目录后检查通过；构建目录由规则忽略 |
 | `pnpm install` + `pnpm approve-builds esbuild` | passed | 依赖锁定、仅批准 esbuild 安装脚本 | 生成 `pnpm-lock.yaml`/`pnpm-workspace.yaml` |
 | `pnpm build` | passed | Vite 7.3.6，29 modules，生成 `dist/` | 前端骨架通过 |
 | `cargo metadata --manifest-path src-tauri/Cargo.toml --no-deps` | passed | `CARGO_METADATA_OK` | Rust manifest/依赖图可解析 |
@@ -112,6 +114,7 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 | `pnpm tauri icon app-icon.png` | passed | 生成 52 个平台图标文件 | 含 48 个 PNG、`icon.ico`、`icon.icns` 和 2 个 Android XML |
 | 平台图标完整性检查 | passed | 48 个 PNG 均可读取；ICO 为 256×256；ICNS 为 1024×1024；主 `icon.png` 为 512×512 | Pillow `verify()` |
 | Git 忽略规则检查 | passed | `dist/`、Tauri/Cargo target、pnpm 缓存、测试报告、`*.tsbuildinfo`、`*.pdb` 均被忽略；`app-icon.png` 与 `src-tauri/icons/icon.png` 保持可跟踪 | `git check-ignore -v` |
+| Git 图片资产策略检查 | passed | `app-icon.png` 与 `src-tauri/icons/**` 命中白名单；53 个图标文件均小于 10 MiB | `git-policy.json` 与文件大小检查 |
 
 ## 9. 交接
 
@@ -124,11 +127,11 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 未运行验证及原因：业务测试按用户要求未实现；bundle/安装包展示验证属于后续切片。
 - 残余风险：Debug 构建已通过，但 bundle 仍关闭，图标尚未经过安装包展示验证。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；本次仅扩充 `.gitignore` 的可重建产物规则。
-- 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；随后保留用户生成的 `app-icon.png` 与 `src-tauri/icons/**`，本次不自动暂存二进制图标。
+- 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；用户生成的 `app-icon.png` 与 `src-tauri/icons/**` 经策略确认后纳入本次资产提交。
 - Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
   当前 HEAD 为 `ecdb8c7`，已包含本次 `.gitignore` 与 WORK 记录提交；工作区仅保留未跟踪的
   `app-icon.png` 和 `src-tauri/icons/**`；REQ/WORK 与骨架 owned paths 初始为 absent。
-- 图标提交状态：`not-run`；仓库策略的 `allowed_binary_globs` 为空，本次提交不自动暂存 PNG/ICO/ICNS 二进制工件。
+- 图标提交状态：待本次策略验证与提交；仓库策略允许命中白名单且单文件不超过 10 MiB 的 PNG/ICO/ICNS 工件。
 - PR 状态：`not-run`；未推送/未创建 Draft PR。改动命中 `package.json`、`Cargo.toml` 等 `remote_execution_paths`，按策略等待独立安全/维护者批准后再推送。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。

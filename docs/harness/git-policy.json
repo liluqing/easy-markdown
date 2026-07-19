@@ -60,8 +60,25 @@
     "external_includes": "immutable-pinned",
     "privileged_branch_execution": "forbidden"
   },
-  "max_auto_stage_file_bytes": 5242880,
-  "allowed_binary_globs": [],
+  "max_auto_stage_file_bytes": 10485760,
+  "allowed_binary_globs": [
+    "app-icon.png",
+    "src-tauri/icons/**/*.png",
+    "src-tauri/icons/**/*.ico",
+    "src-tauri/icons/**/*.icns",
+    "src/assets/**/*.png",
+    "src/assets/**/*.jpg",
+    "src/assets/**/*.jpeg",
+    "src/assets/**/*.webp",
+    "src/assets/**/*.gif",
+    "src/assets/**/*.svg",
+    "public/assets/**/*.png",
+    "public/assets/**/*.jpg",
+    "public/assets/**/*.jpeg",
+    "public/assets/**/*.webp",
+    "public/assets/**/*.gif",
+    "public/assets/**/*.svg"
+  ],
   "required_checks": [
     "validate"
   ],
