@@ -6,7 +6,7 @@ status: accepted
 priority: P1
 owner: "repository-maintainers"
 created: 2026-07-18
-updated: 2026-07-18
+updated: 2026-07-19
 related_product: []
 related_work_items: [WORK-2026-007]
 related_adrs: [ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005]
@@ -55,6 +55,12 @@ E2E 验证。仓库已有产品基线、暂定技术选型和五天 Spike 计划
 
 - 产品约束：Spike 只验证技术风险，不把“Accepted for Spike”描述为生产完成。
 - 技术依赖：Windows、Node.js、pnpm、Rust stable MSVC、Cargo、MSVC C++ Build Tools、WebView2、Git for Windows、ripgrep。
+- Day 1 目录选择使用 Rust 原生对话框库 `rfd` 的异步 API；它只由 Rust Command
+  调用，不向 WebView 暴露文件系统插件命令。`rfd` 使用 MIT 许可，版本由 `Cargo.lock`
+  锁定。首选的 Tauri 官方 dialog 插件因其间接 `tauri-plugin-fs` build-script 被本机
+  App Control 阻止，故采用该插件在 Windows 上同类的底层原生对话框方案。
+- Day 2 编辑器使用 CodeMirror 6；Rust 使用 SHA-256 原始字节版本 Token 和 Windows
+  原生 replace-existing/write-through 文件替换语义，依赖版本由 lockfile 锁定。
 - 数据/隐私/安全：使用合成测试知识库；不提交凭据、真实客户内容或文件正文日志；前端不得获得任意文件/命令权限。
 - 兼容与迁移：优先 Windows 首发；测试需覆盖中文、Emoji、UTF-8 BOM、LF/CRLF 和只读文件。
 - 回退考虑：若硬门槛失败，保留最小可复现实验和证据，按 Spike 计划评估 Electron、SQLite FTS5 或嵌入式 Git，
@@ -88,3 +94,5 @@ Rust Core 负责文件、路径、Git、搜索和安全边界；React/TypeScript
 | 日期 | 决策人 | 决定 | 原因/影响 |
 | --- | --- | --- | --- |
 | 2026-07-18 | repository owner | Accepted | 用户明确要求“开始吧”，授权按既定五天 Spike 计划建立 REQ/WORK 并实施验证；生产选型仍待 Spike 结论 |
+| 2026-07-19 | repository owner | 继续实施 Day 1 | 用户确认“可以，继续吧”，授权先修复 Harness 生成目录扫描，再实现 Rust 侧目录选择、工作区注册、窄 IPC 与 Windows 安装验证 |
+| 2026-07-19 | repository owner | 开始下一步开发 | 用户明确要求进入 MVP 下一步；先交付 Day 2 的文档列表、版本化读写、CodeMirror 编辑与冲突阻断纵切 |
