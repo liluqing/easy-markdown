@@ -129,9 +129,9 @@ Tauri 2 + React/TypeScript/Vite/Rust 的最小项目骨架；本 WORK 当前切�
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；本次仅扩充 `.gitignore` 的可重建产物规则。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；用户生成的 `app-icon.png` 与 `src-tauri/icons/**` 经策略确认后纳入本次资产提交。
 - Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，尚无上游；base `ef912f5`；
-  当前 HEAD 为 `ecdb8c7`，已包含本次 `.gitignore` 与 WORK 记录提交；工作区仅保留未跟踪的
-  `app-icon.png` 和 `src-tauri/icons/**`；REQ/WORK 与骨架 owned paths 初始为 absent。
-- 图标提交状态：待本次策略验证与提交；仓库策略允许命中白名单且单文件不超过 10 MiB 的 PNG/ICO/ICNS 工件。
+  当前 HEAD 为 `a373a13`，已包含图片资产策略、流程说明、WORK 记录与完整图标集；工作区 clean；
+  REQ/WORK 与骨架 owned paths 初始为 absent。
+- 图标提交状态：`included`；`app-icon.png` 与 `src-tauri/icons/**` 已按白名单提交，单文件均不超过 10 MiB。
 - PR 状态：`not-run`；未推送/未创建 Draft PR。改动命中 `package.json`、`Cargo.toml` 等 `remote_execution_paths`，按策略等待独立安全/维护者批准后再推送。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。
