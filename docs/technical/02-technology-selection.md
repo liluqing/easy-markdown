@@ -273,12 +273,16 @@ stateDiagram-v2
     Saving --> Clean: Token 一致且替换成功
     Saving --> Dirty: 可重试写入失败
     Saving --> ExternalConflict: 磁盘 Token 已变化
+    Saving --> Missing: 保存前文件已消失
     Clean --> Reloading: 外部修改
     Reloading --> Clean: 加载成功
+    Clean --> Missing: 外部删除或未知移动
     Dirty --> ExternalConflict: 外部修改
+    Dirty --> Missing: 外部删除或未知移动
     ExternalConflict --> Dirty: 保留本地
     ExternalConflict --> Clean: 加载外部
     ExternalConflict --> Dirty: 手动合并
+    Missing --> Dirty: 用户确认原路径重建
 ```
 
 ## 11. Git 状态机
@@ -317,9 +321,12 @@ Tauri CSP：
 
 - `default-src 'self'`
 - `script-src 'self'`
+- `style-src 'self'`；CodeMirror 运行时样式通过 Vite `cspNonce` 载体和 Tauri
+  打包响应生成的随机 style nonce 放行，不使用生产环境 `unsafe-inline`
 - 禁止远程脚本和 `eval`
 - `img-src` 只包含应用资源和受控本地协议
-- `connect-src` 默认不开放，Git 网络由后端进程完成
+- `connect-src` 默认不开放，Git 网络由后端进程完成；开发 CSP 仅额外允许本地 Vite
+  HMR，并使用固定开发 nonce
 
 ## 13. MVP Git 策略
 

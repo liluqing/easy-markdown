@@ -8,7 +8,7 @@ owner: "repository-maintainers"
 created: 2026-07-18
 updated: 2026-07-19
 related_product: []
-related_work_items: [WORK-2026-007]
+related_work_items: [WORK-2026-007, WORK-2026-008]
 related_adrs: [ADR-0001, ADR-0002, ADR-0003, ADR-0004, ADR-0005]
 ---
 
@@ -61,6 +61,11 @@ E2E 验证。仓库已有产品基线、暂定技术选型和五天 Spike 计划
   App Control 阻止，故采用该插件在 Windows 上同类的底层原生对话框方案。
 - Day 2 编辑器使用 CodeMirror 6；Rust 使用 SHA-256 原始字节版本 Token 和 Windows
   原生 replace-existing/write-through 文件替换语义，依赖版本由 lockfile 锁定。
+- Day 2 后续切片以递归文件 Watch 驱动失效重扫；自动保存采用约 800 ms 防抖并沿用
+  `expectedVersion` 冲突保护。新建、重命名和删除仍由 Rust 窄 IPC 执行，不能覆盖同名
+  目标；删除只允许进入系统回收站，回收站失败时保留原文件。Spike 固定稳定版
+  `notify` 8.2.0（CC0-1.0）、`trash` 5.2.6（MIT）与前端测试依赖 Vitest 4.1.10（MIT）；
+  不采用 `notify` 9.0.0 预发布版。
 - 数据/隐私/安全：使用合成测试知识库；不提交凭据、真实客户内容或文件正文日志；前端不得获得任意文件/命令权限。
 - 兼容与迁移：优先 Windows 首发；测试需覆盖中文、Emoji、UTF-8 BOM、LF/CRLF 和只读文件。
 - 回退考虑：若硬门槛失败，保留最小可复现实验和证据，按 Spike 计划评估 Electron、SQLite FTS5 或嵌入式 Git，
@@ -96,3 +101,4 @@ Rust Core 负责文件、路径、Git、搜索和安全边界；React/TypeScript
 | 2026-07-18 | repository owner | Accepted | 用户明确要求“开始吧”，授权按既定五天 Spike 计划建立 REQ/WORK 并实施验证；生产选型仍待 Spike 结论 |
 | 2026-07-19 | repository owner | 继续实施 Day 1 | 用户确认“可以，继续吧”，授权先修复 Harness 生成目录扫描，再实现 Rust 侧目录选择、工作区注册、窄 IPC 与 Windows 安装验证 |
 | 2026-07-19 | repository owner | 开始下一步开发 | 用户明确要求进入 MVP 下一步；先交付 Day 2 的文档列表、版本化读写、CodeMirror 编辑与冲突阻断纵切 |
+| 2026-07-19 | repository owner | 实施 Watch、自动保存与文件操作切片 | 经逐项确认后，用户授权递归 Watch、约 800 ms 自动保存、新建/重命名/删除 Markdown/TXT；外部删除脏文件时冻结自动保存并保留草稿，仅在用户明确确认后原路径重建；应用内删除脏/冲突文档时阻断；删除只进系统回收站且失败不永久删除 |

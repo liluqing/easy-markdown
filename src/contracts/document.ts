@@ -46,6 +46,39 @@ export function saveText(
   });
 }
 
+export function createText(
+  workspaceId: string,
+  relativePath: string,
+): Promise<TextDocument> {
+  return invoke<TextDocument>("create_text", { workspaceId, relativePath });
+}
+
+export function renameDocument(
+  workspaceId: string,
+  sourcePath: string,
+  targetPath: string,
+  expectedVersion: string,
+): Promise<TextDocument> {
+  return invoke<TextDocument>("rename_document", {
+    workspaceId,
+    sourcePath,
+    targetPath,
+    expectedVersion,
+  });
+}
+
+export function trashDocument(
+  workspaceId: string,
+  relativePath: string,
+  expectedVersion: string,
+): Promise<void> {
+  return invoke<void>("trash_document", {
+    workspaceId,
+    relativePath,
+    expectedVersion,
+  });
+}
+
 export function normalizeDocumentError(
   error: unknown,
 ): DocumentCommandError {

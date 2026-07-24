@@ -10,6 +10,13 @@ interface CodeMirrorEditorProps {
   onChange: (value: string) => void;
 }
 
+function getTauriStyleNonce(): string {
+  const carrier = document.querySelector<HTMLMetaElement>(
+    'meta[property="csp-nonce"]',
+  );
+  return carrier?.nonce || "";
+}
+
 export function CodeMirrorEditor({
   value,
   readOnly = false,
@@ -31,6 +38,7 @@ export function CodeMirrorEditor({
     }
 
     const readOnlyCompartment = readOnlyCompartmentRef.current;
+    const cspNonce = getTauriStyleNonce();
     const view = new EditorView({
       parent: hostRef.current,
       state: EditorState.create({
@@ -39,6 +47,7 @@ export function CodeMirrorEditor({
           basicSetup,
           markdown(),
           EditorView.lineWrapping,
+          ...(cspNonce ? [EditorView.cspNonce.of(cspNonce)] : []),
           EditorView.contentAttributes.of({
             "aria-label": "Markdown 文档编辑器",
             spellcheck: "true",

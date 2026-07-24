@@ -12,9 +12,12 @@ Easy Markdown 是一个面向团队成员与 AI Agent 的本地优先文档工�
 
 ## 当前阶段
 
-当前处于 **MVP 技术 Spike 准备阶段**。产品范围、用户故事和暂定技术选型已经形成；
-Tauri 2、Rust Core、React/TypeScript、CodeMirror、系统 Git CLI 与 ripgrep 等选择仍需
-通过五天 Spike 后才能升级为正式技术基线。
+当前处于 **MVP 技术 Spike 执行阶段**。Tauri 2 + Rust Core +
+React/TypeScript + CodeMirror 安全编辑纵向切片已经合并；递归文件监听、自动保存和
+Markdown/TXT 基本文件操作的功能路径已完成本地实现与常规验证，但句柄级路径竞态和
+版本检查后的极短 TOCTOU 尚在安全复审，未达到本切片 Done。Git、搜索、预览、正式 E2E
+与最终 Go / No-Go 结论仍待验证。所有技术选择仍是
+“Accepted for Spike”，不得描述成已经完成生产验证。
 
 ## 仓库协作 Harness
 

@@ -1,7 +1,7 @@
 ---
 id: WORK-2026-007
 title: "执行 MVP 五天技术 Spike"
-status: in-progress
+status: done
 requirement: REQ-2026-007
 owner: "Codex"
 created: 2026-07-18
@@ -192,22 +192,22 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
 | `node --test scripts/harness/lib.test.mjs` | passed | 2/2 tests | Day 2 修改后 Harness 回归测试通过 |
 | `node scripts/harness/check-harness.mjs` | passed | 7 REQ、1 active WORK、6 archived WORK、5 ADR、47 Markdown files | Day 2 文档与交接记录完成后通过 |
 | Git/GitHub 交接 | passed | implementation HEAD `73a3541` 已推送；Draft PR [#3](https://github.com/liluqing/easy-markdown/pull/3)；远端 `validate` success | PR 保持 Draft，`reviewDecision=REVIEW_REQUIRED`；未转 Ready/未 merge |
+| GitHub PR #3 终态 | passed | PR head `d8b51e2`；squash commit `c208ce32165b7d78063d5e63fcd7b6f4ffa64e1a` | 2026-07-19 已合并到 `main`；后续范围转入 WORK-2026-008 |
 
 ## 9. 交接
 
-- 当前状态：`in-progress`（启动切片、Day 1 和 Day 2 首个手动编辑纵向切片已完成；继续等待
-  独立评审与后续业务 Spike）。
+- 当前状态：`done`（本 WORK 限定的启动、Day 1 和 Day 2 手动编辑纵向切片已通过 PR #3
+  合并；REQ-2026-007 的其余 Spike 验收继续由后续 WORK 承接）。
 - 已完成：环境和骨架、图标集、Harness 生成目录修复、Rust Workspace Registry、无路径
   `open_workspace`、相对路径安全解析、Markdown/TXT 列表、UTF-8/BOM/CRLF 读取、带版本
   令牌的安全保存、CodeMirror 6 手动编辑与冲突选择、11 个 Rust 测试、前端构建、
   Debug/NSIS bundle、安装版启动，以及取消/成功目录选择人工验证。
 - 未完成：NSIS 卸载因 Computer Use 产品策略未运行；Clippy 因 App Control 4551 未通过；
-  递归 Watch、自动保存、Merge View、Git、搜索、预览、E2E、性能和最终 ADR/Go 决策仍属
-  后续切片。
-- 下一具体动作：由独立技术/安全评审者评审 Draft PR #3，并在 App Control 允许后重跑
-  Clippy；项目侧下一实现切片是递归 Watch/debounce，把外部修改事件接入当前版本令牌模型，
-  再加入自动保存和完整 Merge View。宿主外的人类会话可另行卸载隔离 `LocalCache` 中的
-  测试应用。
+  递归 Watch、自动保存、Merge View、Git、搜索、预览、E2E、性能和最终 ADR/Go 决策不在
+  本 WORK 的完成范围，由后续 WORK 承接。
+- 下一具体动作：[WORK-2026-008](WORK-2026-008-实现实时文件-watch-自动保存与文件操作.md)
+  实现递归 Watch/debounce、自动保存、文件操作与最小比较界面；App Control 允许后补跑
+  Clippy。宿主外的人类会话可另行卸载隔离 `LocalCache` 中的测试应用。
 - 修改路径：REQ/WORK、`package.json`、`pnpm-lock.yaml`、`pnpm-workspace.yaml`、`rust-toolchain.toml`、`index.html`、`vite.config.ts`、`tsconfig*.json`、`src/**`、`src-tauri/**`、`public/**`、`app-icon.png`。
 - 已运行验证：环境版本盘点、pnpm install/approve-builds、前端 build/typecheck、Cargo
   metadata、Tauri info/icon、图标完整性、Node Harness tests、Harness、Rust fmt/test、
@@ -219,9 +219,9 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
   文件外部变化只在手动保存时发现；前端单块约 809 KiB。这些均为当前切片的已知限制。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK、骨架文件从 absent 新建；本次仅扩充 `.gitignore` 的可重建产物规则。
 - 工作区保护：任务开始时 `main` clean；REQ/WORK 从 absent 新建；用户生成的 `app-icon.png` 与 `src-tauri/icons/**` 经策略确认后纳入本次资产提交。
-- Git 状态：当前分支 `codex/WORK-2026-007-mvp-technical-spike`，上游为同名 `origin`
-  分支；base/main tip 均为 `ef912f5`。实现检查点 `73a3541` 已提交并推送，所有修改路径
-  均已在 owned paths 中按 clean/absent 起始状态记录。
+- Git 状态：分支 `codex/WORK-2026-007-mvp-technical-spike` 的最终 PR head 为 `d8b51e2`；
+  PR #3 已 squash merge 为 `c208ce32165b7d78063d5e63fcd7b6f4ffa64e1a`。所有修改路径均
+  已在 owned paths 中按 clean/absent 起始状态记录。
 - 图标提交状态：`included`；`app-icon.png` 与 `src-tauri/icons/**` 已按白名单提交，单文件均不超过 10 MiB。
 - 检查点状态：`passed-with-explicit-wip-exception`；实现提交 `73a3541` 已创建。Clippy 的
   环境阻断仍是失败项，用户在已知该失败后明确批准 WIP 检查点；提交和 PR 均已披露，不
@@ -229,9 +229,8 @@ CodeMirror 6 手动编辑闭环。本切片仍不实现自动保存、递归 Wat
 - Push 状态：`passed`；端点预检确认 raw/解析后 fetch/push URL 均为策略批准的
   `https://github.com/liluqing/easy-markdown.git`，无 URL rewrite 或多值端点；首次显式
   refspec push 成功并建立 upstream。
-- PR 状态：`draft`；[GitHub PR #3](https://github.com/liluqing/easy-markdown/pull/3)
-  针对 `main`，首次观察 exact head `73a3541`、`mergeable=true`、远端 `validate=success`、
-  `reviewDecision=REVIEW_REQUIRED`。分支累计改动命中治理与 `remote_execution_paths`，
-  用户作为非 Agent 的仓库负责人已独立批准本次 Draft 交接；不授权转 Ready 或 merge。
+- PR 状态：`merged`；[GitHub PR #3](https://github.com/liluqing/easy-markdown/pull/3)
+  最终 head `d8b51e2` 已由 GitHub squash merge 为 `c208ce3`。本归档修正只记录已发生的
+  远端事实，不把尚未完成的 REQ-2026-007 总体验收描述为通过。
 - 终态说明：`done` 可在归档后进入 Ready/merge；`abandoned` 必须记录原因、未满足验收、
   保留结果、残余风险和后续负责人，永不 Ready/merge。
